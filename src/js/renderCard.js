@@ -1,3 +1,8 @@
+// В этом файле записана логика получения данных из JSON-файла и отрисовка карточек на их основе
+// Но в нем есть ошибки, которые необходимо исправить, для корректной работы:
+// 1) Функция loadCardsFromJson не может получить все карточки, нужно понять почему и исправить этот баг
+// 2) Функция createCardHTML, которая формирует карточку на основе данных, постоянно выводит карточку с одинаковыми данными, а нам нужно генерировать карточки с уникальными данными, которые мы должны получать из передаваймого в функцию обьекта cardItem.
+
 // Получаем блок с id cardsRendering, в котором будут отрисоуваться карточки.
 const cardFeedContainer = document.getElementById("cardsRendering");
 
@@ -7,16 +12,12 @@ let cardItems;
 // Функция для создания HTML-кода элемента карточки
 function createCardHTML(cardItem) {
     // Получаем заголовок, дату, ссылку на изображение и описание из элемента карточки
-    const title = cardItem.title;
-    const date = cardItem.date;
-    const imageUrl = cardItem.image;
-    const description = cardItem.description;
 
     // Возвращаем HTML-код для карточки с уникальными значениями
     return `
     <div class="card">
         <div class="card-img">
-            <img src="${imageUrl}" alt="${title}">
+            <img src="https://coddmac.store/maneje/card_1.jpg" alt="Заголовок №1">
         </div>
         <div class="card-descr">
             <div class="card-date">
@@ -31,11 +32,11 @@ function createCardHTML(cardItem) {
                     </div>
                     <div class="pulse"></div>
                 </div>
-                <span>${date}</span>
+                <span>20.07.2024</span>
             </div>
-            <p class="card-title">${title}</p>
+            <p class="card-title">Заголовок №1</p>
             <p class="card-description">
-                ${description}
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
             </p>
         </div>
     </div>
@@ -61,10 +62,8 @@ function loadCardsFromJson() {
     .then(response => response.json())
     .then(data => {
         console.log('first time')
-        // Записываем карточки в cardItems
-        cardItems = data.cards;
-        
-        console.log(cardItems)
+        // Записываем каждую карточку в мвссив cardItems
+        cardItems = data;
 
         insertCards()
     })
